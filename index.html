@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Imágenes</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>Editor de Imágenes</h1>
+    <input type="file" id="upload" accept="image/*">
+    <input type="text" id="text-input" placeholder="Escribe tu texto aquí">
+    <button id="add-text">Agregar Texto</button>
+    <canvas id="canvas"></canvas>
+    <script src="index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <script>
+        const canvas = new fabric.Canvas('canvas');
+        document.getElementById('upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fabric.Image.fromURL(e.target.result, function(img) {
+                    canvas.setWidth(img.width);
+                    canvas.setHeight(img.height);
+                    canvas.add(img);
+                });
+            }
+            reader.readAsDataURL(file);
+        });
+        // Agregar texto
+        const text = new fabric.Text('Hola Mundo', {
+            left: 100,
+            top: 100,
+            fill: 'red'
+        });
+        canvas.add(text);
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Imágenes</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #canvas {
+            border: 1px solid black;
+            width: 800px; /* Ancho visual */
+            height: 600px; /* Alto visual */
+        }
+    </style>
+</head>
+<body>
+    <h1>Editor de Imágenes</h1>
+    <input type="file" id="upload" accept="image/*">
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script src="app.js"></script>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        document.getElementById('upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html
